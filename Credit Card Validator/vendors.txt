@@ -1,0 +1,27 @@
+#,Name,length (if multiple values separated by dots), ranges  (ranges defined with '-')
+American Express,15,34,37
+Bankcard,16,5610,560221-560225
+China T-Union,19,31
+China UnionPay,16-19,62
+Diners Club enRoute,15,2014,2156
+Diners Club International,14-19,36
+Diners Club International,16-19,300-305,3095,38-39
+Diners Club United States & Canada,16,54,55
+Discover Card,16-19,6011,622126-622925,624000-626999,628200-628899,64,65
+RuPay,16,60,6521,6522
+InterPayment,16-19,636
+InstaPayment,16,637-639
+JCB,16-19,3528-3589
+Laser,16-19,6304,6706,6771,6709
+Maestro UK,12-19,6759,676770,676774
+Maestro,12-19,50,56-59
+Dankort,16,5019,4571
+MIR,16,2200-2204
+Mastercard,16,2221-2720,51-55
+Solo,16.18.19,6334,6767
+Switch,16.18.19,4903,4905,4911,4936,564182,633110,6333,6759
+Troy,16,979200-979289
+Visa,16,4
+UATP,15,1
+Verve,16.19,506099-506198,650002-650027
+LankaPay,16,357111
