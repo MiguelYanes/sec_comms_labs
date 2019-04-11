@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import hashlib
 
 
@@ -33,8 +34,7 @@ def get_hashes(seed, iterations):
         prev_seed = seed
         seed = hash(seed)
 
-        if seed == "c89aa2ffb9edcc6604005196b5f0e0e4":
-            return prev_seed
+    return prev_seed
 
 
 def get_result(username):
@@ -45,4 +45,5 @@ def get_result(username):
     return prev_seed
 
 
-get_result("ECSC")
+user = raw_input("Enter username: ")
+get_result(user)
