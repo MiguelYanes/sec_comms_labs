@@ -8,6 +8,9 @@ import random
 
 class CreditCardValidator:
     def __init__(self):
+        """
+        Class constructor. Initializes the class variable to manage all the known vendors.
+        """
         self.vendors_list = []
 
     def calculate_checksum(self, credit_number):
@@ -42,7 +45,7 @@ class CreditCardValidator:
     def read_vendors_file(self):
         self.vendors_list = []
 
-        with open("vendors.txt", "r") as file:
+        with open("vendors.csv", "r") as file:
             for line in file:
                 values = line.split(',')
                 if values[0] == '#':
@@ -95,36 +98,11 @@ class CreditCardValidator:
         return None
 
     def checksum(self, credit_number):
-        sum_before = self.calculate_checksum(credit_number)
+        sum_before = self.calculate_checksum(credit_number + str(0))
         remainder = sum_before % 10
-
-        correct_sum = False
-        while not correct_sum:
-            chechsum = 0
-
-            num1 = random.randint(0, 9)
-            num1_prod = num1 * 2
-            if len(str(num1_prod)) == 2:
-                res = 0
-                for num in str(num1_prod):
-                    res += int(num)
-                num1_prod = res
-
-            num2_prod = random.randint(0, 9)
-
-            num3 = random.randint(0, 9)
-            num3_prod = num3 * 2
-            if len(str(num3_prod)) == 2:
-                res = 0
-                for num in str(num3_prod):
-                    res += int(num)
-                num3_prod = res
-            num4_prod = random.randint(0, 9)
-
-            checksum = num1_prod + num2_prod + num3_prod + num4_prod
-            if (checksum % 10 + remainder) % 10 == 0:
-                correct_sum = True
-        return num1, num2_prod, num3, num4_prod
+        if remainder > 0:
+            return 10 - remainder
+        return remainder
 
     def get_list_vendors(self):
         vendors = []
@@ -145,13 +123,13 @@ class CreditCardValidator:
                         lengths.append(l)
                 elif '-' in length:
                     length = length.split('-')
-                    for l in range(length[0], length[1]):
+                    for l in range(int(length[0]), int(length[1])):
                         lengths.append(l)
                 else:
                     lengths.append(length)
 
                 rndm_choice = random.randint(0, len(lengths)-1)
-                selected_length = int(lengths[rndm_choice]) - 4  # -4 because of the checksum
+                selected_length = int(lengths[rndm_choice]) - 1  # -4 because of the checksum
 
                 # Get vendor range
                 vendor_range = []
@@ -163,21 +141,23 @@ class CreditCardValidator:
                     else:
                         vendor_range.append(num_range)
 
-                rndm_choice = random.randint(0, len(vendor_range)-1)
-                selected_range = vendor_range[rndm_choice]
-
                 # Generate numbers
-                credit_number = selected_range
-                for digit in range(0, int(selected_length) - int(len(str(selected_range)))):
-                    number = random.randint(0, 9)
-                    credit_number += str(number)
+                num_correct = False
+                while not num_correct:
+                    rndm_choice = random.randint(0, len(vendor_range)-1)
+                    selected_range = vendor_range[rndm_choice]
+
+                    credit_number = str(selected_range)
+                    for digit in range(0, int(selected_length) - int(len(str(selected_range)))):
+                        number = random.randint(0, 9)
+                        credit_number += str(number)
+
+                    if self.vendor(credit_number) == vendor:
+                        num_correct = True
 
                 # Get checksum
-                num1, num2, num3, num4 = self.checksum(credit_number)
-                credit_number += str(num1)
-                credit_number += str(num2)
-                credit_number += str(num3)
-                credit_number += str(num4)
+                checksum = self.checksum(credit_number)
+                credit_number += str(checksum)
 
         return credit_number
 
@@ -218,8 +198,8 @@ while not exit:
         print("\n\n")
     elif choice == '3':
         credit_number = input("\nType the credit card to check the checksum:\n\t> ")
-        num1, num2, num3, num4 = ccvalidator.checksum(credit_number)
-        print("\nCalculated random checksum: " + str(num1) + str(num2) + str(num3) + str(num4))
+        checksum = ccvalidator.checksum(credit_number)
+        print("\nCalculated random checksum: " + str(checksum))
     elif choice == '4':
         if not ccvalidator.vendors_list:
             ccvalidator.read_vendors_file()

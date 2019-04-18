@@ -50,6 +50,20 @@ a multiple of 10. If it ends in 0, then the credit card number is correct. If no
 To implement the credit number verify, I created two different methods. One of them (`calculate_checksum(credit_number)`) is to calculate the sum of all digits (except
 for the last one in this case), and another method (`verify(credit_number)`) to check if the sum with the checksum if a multiple of 10.
 
+<br/>
 
 2. Vendor
 
+The `vendor(credit_number)` method will use the class variable `vendors_list`. It iterates the vendors vector and checks
+
+<br/>
+
+3. Checksum
+
+<br/>
+
+4. Generate
+
+<br/>
+
+asd
