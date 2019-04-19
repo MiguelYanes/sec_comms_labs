@@ -1,7 +1,7 @@
 """
 We seem to be missing the decryption key d? Can you help us somehow decode the ciphertext?
 
-We get: key.py
+We get: key.txt
 """
 import binascii
 
