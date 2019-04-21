@@ -54,16 +54,27 @@ for the last one in this case), and another method (`verify(credit_number)`) to 
 
 2. Vendor
 
-The `vendor(credit_number)` method will use the class variable `vendors_list`. It iterates the vendors vector and checks
+The `vendor(credit_number)` method will use the class variable `vendors_list`. It iterates the vendors vector and checks, 
+for each vendor, all possible provided ranges. The algorithm will check an increasing ammount of digits of both the 
+credit card number, an the vendor range. If the selected digits of the credit card number, are the same length as the range 
+provided, it will check if its similar (or in cases of ranges of ranges (separated with `-`), it will check all range).
+Also, the method stores the longest match found, and for every match with a higher number of characters, it will store the 
+new one. Once it finishes scanning all vendors, it returns the vendor with the highest length match.
 
 <br/>
 
 3. Checksum
 
+This option will return the required checksum to make the selected credit number valid. It uses the already defined method 
+`calculate_checksum(credit_number)`, and it checks if the returned value is divisible by 10. If it's not, it substracts 10
+to the returned value; if not, it just returns the value.
+
 <br/>
 
 4. Generate
 
-<br/>
-
-asd
+The last main option is to generate a valid credit card number of a selected vendor. After listing all available vendors,
+the user has to choose one. Once a vendor is chosen, the method `generate(vendor)` will select a random number length from 
+the ones provided by the selected vendor, and a random initial range also selected from the ones offered by the vendor. 
+Then, it generates the required amount of random digits, except for the last one. With the method `checksum(credit_number)`
+it gets the required checksum to make the number digit. Once the number is complete, it is returned to the user.
